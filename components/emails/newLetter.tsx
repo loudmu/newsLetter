@@ -1,6 +1,6 @@
 import {
 
-  Link,
+  Link
 
 } from '@react-email/components';
 import * as React from 'react';
@@ -14,7 +14,10 @@ export type NewsLetterProps = {
 }[] | null
 
 const NewsLetterForm = (subscriber: NewsLetterProps) => {
-  const baseUrl = process.env.SITE_URL
+  const env = process.env.NODE_ENV
+  const baseUrl = env === 'development' ? 'http://localhost:3000' : process.env.SITE_URL
+
+  console.log(subscriber)
 
   if (!subscriber) return null
   const { id, locale } = subscriber[0]
@@ -32,6 +35,7 @@ const NewsLetterForm = (subscriber: NewsLetterProps) => {
       by clicking on the link below, you are confirming your subscription to our newsletter.
     </p>
     <br />
+    <Link href={url}>Confirm subscription</Link>
   </div >
 
 

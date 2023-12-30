@@ -9,6 +9,7 @@ import { z } from "zod"
 import { Resend } from "resend"
 import NewsLetterForm from '@/components/emails/newLetter'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 // import { resendAPI } from '@/utils/resendAPI'
 const resend = new Resend(process.env.RESEND_API_KEY)
 const schema = z.object({
@@ -36,26 +37,38 @@ export async function getUserByEmail(email: string) {
 }
 
 
-export async function subscribe(formData: FormData) {
+export async function subscribe(prevState: {
+  message: string,
+  success: boolean,
+
+},
+
+  formData: FormData
+
+) {
+
 
 
   const email = formData.get('email') as string;
 
   if (!schema.safeParse(email)) {
-    return "Invalid email"
+    return { message: 'invalid email adress', success: false }
   }
 
   try {
     const { data, error } = await insertSubscriber(email)
     if (error) {
-      throw error;
+      return { success: false, message: 'you are already subscribed' }
+
     }
     sendNewsLetter(data)
     revalidatePath('/')
-    return { success: true, data, message: 'You have successfully subscribed to our newsletter' }
+
+
+    return { success: true, message: 'Please check your email for confirmation' }
   } catch (error) {
 
-    return { error: 'Unable to subscribe' }
+    return { success: false, message: 'your subsription have failed' }
   }
 
 }
@@ -75,6 +88,7 @@ async function insertSubscriber(email: string) {
     ])
     .select()
 
+
 }
 
 
@@ -86,7 +100,7 @@ export async function sendNewsLetter(subscriber: NewsLetterProps) {
   if (!subscriber) return null
   try {
     const data = await resend.emails.send({
-      from: "your-email",
+      from: "me@to.you",
 
 
       to: subscriber[0].email,

@@ -1,12 +1,11 @@
-import DeployButton from '../components/DeployButton'
+
 import AuthButton from '../components/AuthButton'
 import { createClient } from '@/utils/supabase/server'
 import ConnectSupabaseSteps from '@/components/ConnectSupabaseSteps'
-import SignUpUserSteps from '@/components/SignUpUserSteps'
 import Header from '@/components/Header'
 import { cookies } from 'next/headers'
-import { subscribe } from "../app/apis/actions"
-import Link from 'next/link'
+
+import FormSubmit from '@/components/FormSubmit'
 export default async function Index() {
   const cookieStore = cookies()
 
@@ -37,7 +36,9 @@ export default async function Index() {
         <Header />
         <main className="flex-1 flex flex-col gap-6">
           <h2 className="font-bold text-4xl mb-4">Newsletter</h2>
-          <form action={subscribe} method="POST">
+          {/* <form action={subscribe} method="POST">
+           
+
             <input
               className="rounded-md px-4 py-2 bg-inherit border mb-6"
               type="email"
@@ -46,26 +47,27 @@ export default async function Index() {
               required
             />
             <button className="rounded-md px-4 py-2 bg-btn-background border">Subscribe</button>
-          </form>
+          </form> */}
+          <FormSubmit />
           <p className="text-sm text-foreground/50">
             By subscribing you agree to our{' '}
-            <Link
+            <a
               href="https://supabase.io/privacy"
-              target="_blank"
+
               className="font-bold hover:underline"
-              rel="noreferrer"
+
             >
               Privacy Policy
-            </Link>{' '}
+            </a>{' '}
             and{' '}
-            <Link
+            <a
               href="https://supabase.io/terms"
               target="_blank"
               className="font-bold hover:underline"
               rel="noreferrer"
             >
               Terms of Service
-            </Link>
+            </a>
           </p>
           <p className="text-sm text-foreground/50">
             We will never share your email address with a third-party.
