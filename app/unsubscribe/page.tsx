@@ -2,18 +2,19 @@ import Link from 'next/link'
 // import { headers, cookies } from 'next/headers'
 // import { createClient } from '@/utils/supabase/server'
 
-import { confirmSubscriber } from "../apis/actions"
+import { unsubscribe } from "../apis/actions"
 
 // import { redirect } from 'next/navigation'
 
 
-export default async function Confirm({
+export default async function Unsubscribe({
     searchParams,
 }: {
     searchParams: { id: string, email: string, locale: string }
 }) {
+
     const id = searchParams.id
-    const { message, success } = await confirmSubscriber(id)
+    const { message, success } = await unsubscribe(id)
 
     return (
         <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -21,7 +22,11 @@ export default async function Confirm({
 
             <div className="flex flex-col gap-2">
                 {success && <div className="text-green-500">
-                    {message}
+                    We are sorry to see you go,
+                    u will be removed from our mailing list
+                    and we will not send you any more newsletter.
+                    <br />
+
                     <Link href="/" className='text-blue-500'>
                         ok
                     </Link>

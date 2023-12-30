@@ -1,3 +1,10 @@
+import {
+
+  Link,
+
+} from '@react-email/components';
+import * as React from 'react';
+
 export type NewsLetterProps = {
   active: boolean;
   created_at: string;
@@ -5,37 +12,30 @@ export type NewsLetterProps = {
   id: string;
   locale: "fr-ca" | "en-ca";
 }[] | null
-import Link from "next/link";
+
 const NewsLetterForm = (subscriber: NewsLetterProps) => {
-  console.log(11, subscriber)
+  const baseUrl = process.env.SITE_URL
+
   if (!subscriber) return null
+  const { id, locale } = subscriber[0]
+  const url = `${baseUrl}/confirm?id=${id}&locale=${locale}`
 
-  const url = new URL(window.location.href)
-  console.log(22, url)
 
-  console.log(url)
 
   return <div>
-    <h1> Confirmation de suscription </h1>
+    <h1> Subscription confirmation</h1>
     <p>
       From <strong>info</strong> at
     </p>
-    <h2> merci</h2>
+    <h2> Thank you</h2>
     <p>
-      en clickant sur le lien vous confirmez votre suscription à notre newsletter.
-      veuillez cliquer sur le lien suivant pour confirmer votre suscription
-      <Link href={{
-        pathname: '/confirm',
-        query: { id: subscriber[0].id, email: subscriber[0].email, locale: subscriber[0].locale },
-
-
-      }}>confirmer</Link>
-
-
+      by clicking on the link below, you are confirming your subscription to our newsletter.
     </p>
-  </div>
+    <br />
+  </div >
 
 
 }
+
 
 export default NewsLetterForm

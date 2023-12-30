@@ -1,7 +1,7 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { NextResponse } from 'next/server'
-import { headers, cookies } from 'next/headers'
+
+import { cookies } from 'next/headers'
 import { NewsLetterProps } from '@/components/emails/newLetter'
 
 
@@ -52,7 +52,7 @@ export async function subscribe(formData: FormData) {
     sendNewsLetter(data)
     return { success: true, data, message: 'You have successfully subscribed to our newsletter' }
   } catch (error) {
-    console.error('Error inserting subscriber:', error)
+
     return { error: 'Unable to subscribe' }
   }
 
@@ -80,14 +80,15 @@ async function insertSubscriber(email: string) {
 
 
 export async function sendNewsLetter(subscriber: NewsLetterProps) {
-  // console.log(2, subscriber)
+
+  if (!subscriber) return null
   try {
     const data = await resend.emails.send({
-      from: "info@ecoassurance.ca",
+      from: "your-email",
 
 
-      to: "loudmu@gmail.com",
-      subject: "Contact form submission",
+      to: subscriber[0].email,
+      subject: "subscription confirmation",
 
       react: NewsLetterForm(subscriber),
     })
@@ -97,8 +98,54 @@ export async function sendNewsLetter(subscriber: NewsLetterProps) {
   }
 }
 
+export async function confirmSubscriber(id: string) {
+  const cookieStore = cookies()
+
+  const supabase = createClient(cookieStore);
+  try {
+    const { data, error } = await supabase
+      .from('subscribers')
+      .update({ active: true })
+      .eq('id', id)
+      .single()
+
+    if (error) {
+      return { success: false, error, message: 'Unable to confirm your subscription' }
+    }
+    return { success: true, data, message: 'You have successfully subscribed to our newsletter' }
+
+
+  } catch (error: any) {
+
+    throw new Error(error.message)
 
 
 
 
+  }
 
+
+}
+
+
+export async function unsubscribe(id: string) {
+  const cookieStore = cookies()
+
+  const supabase = createClient(cookieStore);
+  try {
+    const { data, error } = await supabase
+      .from('subscribers')
+      .delete()
+      .eq('id', id)
+      .single()
+
+    if (error) {
+      return { success: false, error, message: 'Unable to unsubscribe' }
+    }
+    return { success: true, data, message: 'You have successfully unsubscribed from our newsletter' }
+  }
+  catch (error: any) {
+
+    throw new Error(error.message)
+  }
+}
