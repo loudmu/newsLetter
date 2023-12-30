@@ -8,6 +8,7 @@ import { NewsLetterProps } from '@/components/emails/newLetter'
 import { z } from "zod"
 import { Resend } from "resend"
 import NewsLetterForm from '@/components/emails/newLetter'
+import { revalidatePath } from 'next/cache'
 // import { resendAPI } from '@/utils/resendAPI'
 const resend = new Resend(process.env.RESEND_API_KEY)
 const schema = z.object({
@@ -50,6 +51,7 @@ export async function subscribe(formData: FormData) {
       throw error;
     }
     sendNewsLetter(data)
+    revalidatePath('/')
     return { success: true, data, message: 'You have successfully subscribed to our newsletter' }
   } catch (error) {
 

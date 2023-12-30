@@ -6,6 +6,7 @@ import SignUpUserSteps from '@/components/SignUpUserSteps'
 import Header from '@/components/Header'
 import { cookies } from 'next/headers'
 import { subscribe } from "../app/apis/actions"
+import Link from 'next/link'
 export default async function Index() {
   const cookieStore = cookies()
 
@@ -48,23 +49,23 @@ export default async function Index() {
           </form>
           <p className="text-sm text-foreground/50">
             By subscribing you agree to our{' '}
-            <a
+            <Link
               href="https://supabase.io/privacy"
               target="_blank"
               className="font-bold hover:underline"
               rel="noreferrer"
             >
               Privacy Policy
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a
+            <Link
               href="https://supabase.io/terms"
               target="_blank"
               className="font-bold hover:underline"
               rel="noreferrer"
             >
               Terms of Service
-            </a>
+            </Link>
           </p>
           <p className="text-sm text-foreground/50">
             We will never share your email address with a third-party.
