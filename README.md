@@ -1,7 +1,7 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
+
+
   <h1 align="center">Newsletter subscription based on Next.js, Resend and Supabase Starter Kit</h1>
-</a>
+
 
 <p align="center">
 implementation of a newsletter subscription based on Next.js, Resend and Supabase Starter Kit and server actions.
@@ -21,14 +21,6 @@ active (boolean),
 <p>when the user clicks on the link in the email, the active column will be set to true</p>
 
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
 <br/>
 
 ## Features
